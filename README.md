@@ -9,3 +9,4 @@ A simple image processing project built with Windows Forms. This application all
 **Histogram** – Display a histogram of grayscale intensity values.  
 **Sepia** – Apply a warm, brownish filter for a vintage effect.  
 **Subtraction (Green Screen)** – Replace the green background of one image with another image.  
+**Webcam Functionality** – Can capture images using webcam and apply transformations.  
