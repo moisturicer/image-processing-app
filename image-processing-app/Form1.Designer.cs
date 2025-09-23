@@ -48,11 +48,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.livePictureBox1 = new image_processing.LivePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.livePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -94,7 +92,7 @@
             this.importToolStripMenuItem,
             this.saveToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 24);
             this.toolStripMenuItem1.Text = "File";
             // 
             // importToolStripMenuItem
@@ -118,7 +116,7 @@
             this.offToolStripMenuItem,
             this.captureToolStripMenuItem});
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(74, 26);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
             this.cameraToolStripMenuItem.Text = "Camera";
             // 
             // onToolStripMenuItem
@@ -152,7 +150,7 @@
             this.sepiaToolStripMenuItem,
             this.subtractionToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // basicCopyToolStripMenuItem
@@ -221,20 +219,11 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // livePictureBox1
-            // 
-            this.livePictureBox1.Location = new System.Drawing.Point(266, 398);
-            this.livePictureBox1.Name = "livePictureBox1";
-            this.livePictureBox1.Size = new System.Drawing.Size(107, 39);
-            this.livePictureBox1.TabIndex = 7;
-            this.livePictureBox1.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 438);
-            this.Controls.Add(this.livePictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox2);
@@ -250,7 +239,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.livePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,7 +266,6 @@
         private System.Windows.Forms.ToolStripMenuItem onToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem offToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem captureToolStripMenuItem;
-        private LivePictureBox livePictureBox1;
     }
 }
 
