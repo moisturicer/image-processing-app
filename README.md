@@ -1,5 +1,6 @@
-Image Processing App (WinForms C#)
----
+
+**Image Processing App (WinForms)**
+
 A simple image processing project built with Windows Forms. This application allows you to apply different filters and transformations to images.
 
 **Copy** – Load and display the original image.  
