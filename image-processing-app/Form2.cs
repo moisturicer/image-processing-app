@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebCamLib;
 
 namespace image_processing
 {
@@ -15,6 +16,8 @@ namespace image_processing
     {
         Form1 _f1;
         Bitmap imageB, imageA, processed;
+        private Device myWebcam;
+
         public Form2(Form1 f1)
         {
             InitializeComponent();
@@ -58,6 +61,61 @@ namespace image_processing
                 MessageBox.Show("No processed image to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void turnOnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                turnOffToolStripMenuItem_Click(null, null);
+            }
+
+            Device[] devices = DeviceManager.GetAllDevices();
+            if (devices.Length > 0)
+            {
+                myWebcam = devices[0];
+                myWebcam.ShowWindow(pictureBox1);
+            }
+            else
+            {
+                MessageBox.Show("No webcams found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void captureAsMainImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                myWebcam.Sendmessage();
+                IDataObject data = Clipboard.GetDataObject();
+                if (data != null)
+                {
+                    Image image = (Image)data.GetData(DataFormats.Bitmap, true);
+                    if(image!=null)
+                    {
+                        imageB = new Bitmap(image);
+                        pictureBox1.Image = image;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Could not capture image from webcam.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Camera is turned off. Please turn it on first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void turnOffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                myWebcam.Stop();
+                pictureBox1.Image = null;
+                myWebcam = null;
+            }
+        }
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -75,6 +133,12 @@ namespace image_processing
         {
             if (pictureBox1.Image != null && pictureBox2.Image != null)
             {
+                Bitmap backgroundResized = new Bitmap(imageB.Width, imageB.Height);
+                using (Graphics g = Graphics.FromImage(backgroundResized))
+                {
+                    g.DrawImage(imageA, 0, 0, imageB.Width, imageB.Height);
+                }
+
                 Color mygreen = Color.FromArgb(0, 0, 255);
                 int greygreen = (mygreen.R + mygreen.G + mygreen.B) / 3;
                 int threshold = 5;
@@ -84,7 +148,7 @@ namespace image_processing
                     for (int y = 0; y < imageB.Height; y++)
                     {
                         Color pixelColor = imageB.GetPixel(x, y);
-                        Color backPixelColor = imageA.GetPixel(x, y);
+                        Color backPixelColor = backgroundResized.GetPixel(x, y);
                         int grey = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
                         int difference = Math.Abs(grey - greygreen);
                         if (difference > threshold)

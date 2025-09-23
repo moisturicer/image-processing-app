@@ -38,6 +38,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportSubtractedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.turnOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.turnOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.captureAsMainImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -113,6 +117,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.backToolStripMenuItem,
+            this.cameraToolStripMenuItem,
             this.exportSubtractedImageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -133,6 +138,37 @@
             this.exportSubtractedImageToolStripMenuItem.Size = new System.Drawing.Size(188, 24);
             this.exportSubtractedImageToolStripMenuItem.Text = "Export Subtracted Image";
             this.exportSubtractedImageToolStripMenuItem.Click += new System.EventHandler(this.exportSubtractedImageToolStripMenuItem_Click);
+            // 
+            // cameraToolStripMenuItem
+            // 
+            this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.turnOnToolStripMenuItem,
+            this.turnOffToolStripMenuItem,
+            this.captureAsMainImageToolStripMenuItem});
+            this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.cameraToolStripMenuItem.Text = "Camera";
+            // 
+            // turnOnToolStripMenuItem
+            // 
+            this.turnOnToolStripMenuItem.Name = "turnOnToolStripMenuItem";
+            this.turnOnToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.turnOnToolStripMenuItem.Text = "Turn On";
+            this.turnOnToolStripMenuItem.Click += new System.EventHandler(this.turnOnToolStripMenuItem_Click);
+            // 
+            // turnOffToolStripMenuItem
+            // 
+            this.turnOffToolStripMenuItem.Name = "turnOffToolStripMenuItem";
+            this.turnOffToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.turnOffToolStripMenuItem.Text = "Turn Off";
+            this.turnOffToolStripMenuItem.Click += new System.EventHandler(this.turnOffToolStripMenuItem_Click);
+            // 
+            // captureAsMainImageToolStripMenuItem
+            // 
+            this.captureAsMainImageToolStripMenuItem.Name = "captureAsMainImageToolStripMenuItem";
+            this.captureAsMainImageToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.captureAsMainImageToolStripMenuItem.Text = "Capture As Main Image";
+            this.captureAsMainImageToolStripMenuItem.Click += new System.EventHandler(this.captureAsMainImageToolStripMenuItem_Click);
             // 
             // Form2
             // 
@@ -173,5 +209,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportSubtractedImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem turnOnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem turnOffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem captureAsMainImageToolStripMenuItem;
     }
 }

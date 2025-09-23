@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebCamLib;
 
 namespace image_processing
 {
     public partial class Form1 : Form
     {
+        private Device myWebcam;
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace image_processing
         {
             if (pictureBox1.Image != null)
             {
-                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap original = new Bitmap(pictureBox1.Image);
                 Bitmap processed = new Bitmap(original.Width, original.Height);
 
                 for (int y = 0; y < original.Height; y++)
@@ -53,7 +55,7 @@ namespace image_processing
         {
             if (pictureBox1.Image != null)
             {
-                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap original = new Bitmap(pictureBox1.Image);
                 Bitmap processed = new Bitmap(original.Width, original.Height);
 
                 for (int y = 0; y < original.Height; y++)
@@ -89,7 +91,7 @@ namespace image_processing
         {
             if (pictureBox1.Image != null)
             {
-                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap original = new Bitmap(pictureBox1.Image);
                 Bitmap processed = new Bitmap(original.Width, original.Height);
 
                 for (int y = 0; y < original.Height; y++)
@@ -114,7 +116,7 @@ namespace image_processing
         {
             if (pictureBox1.Image != null)
             {
-                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap original = new Bitmap(pictureBox1.Image  );
                 Bitmap processed = new Bitmap(original.Width, original.Height);
 
                 int[] histogram = new int[256];
@@ -153,7 +155,7 @@ namespace image_processing
         {
             if (pictureBox1.Image != null)
             {
-                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap original = new Bitmap(pictureBox1.Image);
                 Bitmap processed = new Bitmap(original.Width, original.Height);
 
                 for (int y = 0; y < original.Height; y++)
@@ -198,6 +200,58 @@ namespace image_processing
             Form2 f2 = new Form2(this);
             f2.Show();
             this.Hide();
+        }
+
+        private void onToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                offToolStripMenuItem_Click(null, null);
+            }
+
+            Device[] devices = DeviceManager.GetAllDevices();
+            if (devices.Length > 0)
+            {
+                myWebcam = devices[0];
+                myWebcam.ShowWindow(pictureBox1);
+            }
+            else
+            {
+                MessageBox.Show("No webcams found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void offToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                myWebcam.Stop();
+                pictureBox1.Image = null;
+                myWebcam = null;
+            }
+        }
+
+        private void captureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (myWebcam != null)
+            {
+                myWebcam.Sendmessage();
+                IDataObject data = Clipboard.GetDataObject();
+                if (data != null)
+                {
+                    Image image = (Image)data.GetData(DataFormats.Bitmap, true);
+                    pictureBox1.Image = image;
+                }
+                else
+                {
+                    MessageBox.Show("Could not capture image from webcam.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Camera is turned off. Please turn it on first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
