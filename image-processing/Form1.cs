@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,65 +23,54 @@ namespace image_processing
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void grayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap original = new Bitmap(openFileDialog1.FileName);
-            Bitmap processed = new Bitmap(original.Width, original.Height);
-
-            for (int y = 0; y < original.Height; y++)
+            if (pictureBox1.Image != null)
             {
-                for (int x = 0; x < original.Width; x++)
+                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap processed = new Bitmap(original.Width, original.Height);
+
+                for (int y = 0; y < original.Height; y++)
                 {
-                    Color pixelColor = original.GetPixel(x, y);
-                    int grey = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-                    pixelColor = Color.FromArgb(grey, grey, grey);  
-                    processed.SetPixel(x, y, pixelColor);
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        Color pixelColor = original.GetPixel(x, y);
+                        int grey = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                        pixelColor = Color.FromArgb(grey, grey, grey);
+                        processed.SetPixel(x, y, pixelColor);
+                    }
                 }
+
+                pictureBox2.Image = processed;
             }
-
-            pictureBox2.Image = processed;
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void basicCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap original = new Bitmap(openFileDialog1.FileName);
-            Bitmap processed = new Bitmap(original.Width, original.Height);
-
-            for(int y=0; y<original.Height; y++)
+            if (pictureBox1.Image != null)
             {
-                for(int x=0; x<original.Width; x++)
-                {
-                    Color pixelColor = original.GetPixel(x, y);
-                    processed.SetPixel(x, y, pixelColor); 
-                }
-            }
+                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap processed = new Bitmap(original.Width, original.Height);
 
-            pictureBox2.Image = processed;
+                for (int y = 0; y < original.Height; y++)
+                {
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        Color pixelColor = original.GetPixel(x, y);
+                        processed.SetPixel(x, y, pixelColor);
+                    }
+                }
+
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+            }
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,72 +87,117 @@ namespace image_processing
 
         private void colorInversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap original = new Bitmap(openFileDialog1.FileName);
-            Bitmap processed = new Bitmap(original.Width, original.Height);
-
-            for (int y = 0; y < original.Height; y++)
+            if (pictureBox1.Image != null)
             {
-                for (int x = 0; x < original.Width; x++)
-                {
-                    Color pixelColor = original.GetPixel(x, y);
-                    pixelColor = Color.FromArgb(255-pixelColor.R, 255-pixelColor.G, 255-pixelColor.B);
-                    processed.SetPixel(x, y, pixelColor);
-                }
-            }
+                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap processed = new Bitmap(original.Width, original.Height);
 
-            pictureBox2.Image = processed;
+                for (int y = 0; y < original.Height; y++)
+                {
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        Color pixelColor = original.GetPixel(x, y);
+                        pixelColor = Color.FromArgb(255 - pixelColor.R, 255 - pixelColor.G, 255 - pixelColor.B);
+                        processed.SetPixel(x, y, pixelColor);
+                    }
+                }
+
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap original = new Bitmap(openFileDialog1.FileName);
-            Bitmap processed = new Bitmap(original.Width, original.Height);
-
-            int[] histogram = new int[256];
-            for (int y = 0; y < original.Height; y++)
+            if (pictureBox1.Image != null)
             {
-                for (int x = 0; x < original.Width; x++)
-                {
-                    Color pixelColor = original.GetPixel(x, y);
-                    int grey = (int)(pixelColor.R*0.299 + pixelColor.G*0.587 + pixelColor.B*0.114);
-                    histogram[grey]++;
-                }
-            }
+                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap processed = new Bitmap(original.Width, original.Height);
 
-            using (Graphics graphics = Graphics.FromImage(processed))
+                int[] histogram = new int[256];
+                for (int y = 0; y < original.Height; y++)
+                {
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        Color pixelColor = original.GetPixel(x, y);
+                        int grey = (int)(pixelColor.R * 0.299 + pixelColor.G * 0.587 + pixelColor.B * 0.114);
+                        histogram[grey]++;
+                    }
+                }
+
+                using (Graphics graphics = Graphics.FromImage(processed))
+                {
+                    graphics.Clear(Color.White);
+                    int max = histogram.Max();
+                    float binWidth = processed.Width / 256f;
+
+                    for (int i = 0; i < 256; i++)
+                    {
+                        int barHeight = (int)((histogram[i] / (float)max) * processed.Height);
+                        graphics.FillRectangle(Brushes.Gray, i * binWidth, processed.Height - barHeight, binWidth, barHeight);
+                    }
+                }
+
+                pictureBox2.Image = processed;
+            }
+            else
             {
-                graphics.Clear(Color.White);
-                int max = histogram.Max();
-                float binWidth = processed.Width / 256f;
-
-                for(int i=0; i<256; i++)
-                {
-                    int barHeight = (int)((histogram[i]/(float)max)*processed.Height);
-                    graphics.FillRectangle(Brushes.Gray, i*binWidth, processed.Height - barHeight, binWidth, barHeight);
-                }
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            pictureBox2.Image = processed;
         }
 
         private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap original = new Bitmap(openFileDialog1.FileName);
-            Bitmap processed = new Bitmap(original.Width, original.Height);
-
-            for (int y = 0; y < original.Height; y++)
+            if (pictureBox1.Image != null)
             {
-                for (int x = 0; x < original.Width; x++)
-                {
-                    Color pixelColor = original.GetPixel(x, y);
-                    int r = Math.Min(255, (int)(0.393*pixelColor.R + 0.769*pixelColor.G + 0.189*pixelColor.B));
-                    int g = Math.Min(255, (int)(0.349*pixelColor.R + 0.686*pixelColor.G + 0.168*pixelColor.B));
-                    int b = Math.Min(255, (int)(0.272*pixelColor.R + 0.534*pixelColor.G + 0.131*pixelColor.B));
-                    processed.SetPixel(x, y, Color.FromArgb(r, g, b));
-                }
-            }
+                Bitmap original = new Bitmap(openFileDialog1.FileName);
+                Bitmap processed = new Bitmap(original.Width, original.Height);
 
-            pictureBox2.Image = processed;
+                for (int y = 0; y < original.Height; y++)
+                {
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        Color pixelColor = original.GetPixel(x, y);
+                        int r = Math.Min(255, (int)(0.393 * pixelColor.R + 0.769 * pixelColor.G + 0.189 * pixelColor.B));
+                        int g = Math.Min(255, (int)(0.349 * pixelColor.R + 0.686 * pixelColor.G + 0.168 * pixelColor.B));
+                        int b = Math.Min(255, (int)(0.272 * pixelColor.R + 0.534 * pixelColor.G + 0.131 * pixelColor.B));
+
+                        processed.SetPixel(x, y, Color.FromArgb(r, g, b));
+                    }
+                }
+
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox2.Image != null)
+            {
+                string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                string fileName = "processed_" + Guid.NewGuid().ToString("N").Substring(0,8) + ".png";
+                string filePath = Path.Combine(downloadPath, fileName); 
+                pictureBox2.Image.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                MessageBox.Show("Image saved to: " + filePath);
+            }
+            else
+            {
+                MessageBox.Show("No processed image to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void subtractionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2(this);
+            f2.Show();
+            this.Hide();
         }
     }
 }
