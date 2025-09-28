@@ -253,5 +253,106 @@ namespace image_processing
                 MessageBox.Show("Camera is turned off. Please turn it on first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void shrinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap processed = new Bitmap(pictureBox1.Image);
+                Convolution.ConvMatrix m = new Convolution.ConvMatrix();
+                m.SetAll(1);
+                m.Pixel = 1;
+                m.Factor = 1+8;
+                Convolution.ConvFilters.Conv3x3(processed, m);
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void smoothenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap processed = new Bitmap(pictureBox1.Image);
+                Convolution.ConvMatrix m = new Convolution.ConvMatrix();
+                m.SetAll(1);
+                m.Pixel = 1;
+                m.Factor = 9;
+                m.Offset = 0;
+
+                Convolution.ConvFilters.Conv3x3(processed, m);
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap processed = new Bitmap(pictureBox1.Image);
+                Convolution.ConvMatrix m = new Convolution.ConvMatrix();
+                m.TopLeft = 1; m.TopMid = 2; m.TopRight = 1;
+                m.MidLeft = 2; m.Pixel = 4; m.MidRight = 2;
+                m.BottomLeft = 1; m.BottomMid = 2; m.BottomRight = 1;
+                m.Factor = 16;
+                m.Offset = 0;
+
+                Convolution.ConvFilters.Conv3x3(processed, m);
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap processed = new Bitmap(pictureBox1.Image);
+                Convolution.ConvMatrix m = new Convolution.ConvMatrix();
+                m.TopLeft = 0; m.TopMid = -2; m.TopRight = 0;
+                m.MidLeft = -2; m.Pixel = 11; m.MidRight = -2;
+                m.BottomLeft = 0; m.BottomMid = -2; m.BottomRight = 0;
+                m.Factor = 3;
+                m.Offset = 0;
+
+                Convolution.ConvFilters.Conv3x3(processed, m);
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void embossingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap processed = new Bitmap(pictureBox1.Image);
+                Convolution.ConvMatrix m = new Convolution.ConvMatrix();
+                m.TopLeft = -1; m.TopMid = 0; m.TopRight = -1;
+                m.MidLeft = 0; m.Pixel = 4; m.MidRight = 0;
+                m.BottomLeft = -1; m.BottomMid = 0; m.BottomRight = -1;
+                m.Factor = 1;
+                m.Offset = 127; 
+
+                Convolution.ConvFilters.Conv3x3(processed, m);
+                pictureBox2.Image = processed;
+            }
+            else
+            {
+                MessageBox.Show("No imported image to process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
