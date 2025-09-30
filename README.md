@@ -14,4 +14,4 @@ A simple image processing project built with Windows Forms. This application all
 **Sharpen** – Enhances edges and details of the image.  
 **Embossing** – Gives a 3D raised or recessed effect.  
 **Subtraction (Green Screen)** – Replace the green background of one image with another image.  
-**Webcam Functionality** – Can capture images using webcam and apply transformations.  
+**Webcam Functionality** – Can capture images using webcam and apply transformations.
